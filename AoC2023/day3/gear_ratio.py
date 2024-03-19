@@ -12,6 +12,8 @@ with open('./AoC2023/day3/input.txt', 'r') as file:
     value = f[i][0:j+1]
     for k in range(len(value)-1, -1, -1):
       if (re.compile(r'[0-9]').match(value[k]) and '{}{}'.format(i, k) not in visited_nodes[visiting_node]):
+        if (len(visited_nodes[visiting_node]) > 0):
+          visited_nodes[visiting_node].append('{}{}'.format(i, k))
         result = value[k] + result
       else:
         break
@@ -19,6 +21,8 @@ with open('./AoC2023/day3/input.txt', 'r') as file:
     value = f[i][j+1:len(f[i])-1]
     for k in range(len(value)):
       if (re.compile(r'[0-9]').match(value[k]) and '{}{}'.format(i, j+k) not in visited_nodes[visiting_node]):
+        if (len(visited_nodes[visiting_node]) > 0):
+          visited_nodes[visiting_node].append('{}{}'.format(i, j+k))
         result = result + value[k]
       else:
         break
@@ -45,7 +49,8 @@ with open('./AoC2023/day3/input.txt', 'r') as file:
               
               adj_list.append('{}{}'.format(i+di, j+dj))
               visited_nodes['{}{}'.format(i, j)] = adj_list
-              part_number_sum += int(value)
+              if (p2.match(value)):
+                part_number_sum += int(value)
         
         # check character at i-1, j-1
         # p2 = re.compile(r'[0-9]')
